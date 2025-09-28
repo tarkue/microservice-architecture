@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic", "Logic\Logic.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dal", "Dal\Dal.csproj", "{A8EFB0A9-2713-421E-8E21-04DA1793A584}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{1D46535E-5E20-45AD-B615-8E2030A10C90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "..\CoreLib\Domain\Domain.csproj", "{5AD0CEBD-DBCF-473D-9359-635CF3FFA5A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,5 +33,12 @@ Global
 		{A8EFB0A9-2713-421E-8E21-04DA1793A584}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8EFB0A9-2713-421E-8E21-04DA1793A584}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8EFB0A9-2713-421E-8E21-04DA1793A584}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AD0CEBD-DBCF-473D-9359-635CF3FFA5A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AD0CEBD-DBCF-473D-9359-635CF3FFA5A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AD0CEBD-DBCF-473D-9359-635CF3FFA5A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AD0CEBD-DBCF-473D-9359-635CF3FFA5A4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5AD0CEBD-DBCF-473D-9359-635CF3FFA5A4} = {1D46535E-5E20-45AD-B615-8E2030A10C90}
 	EndGlobalSection
 EndGlobal

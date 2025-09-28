@@ -1,6 +1,6 @@
-using Core.Domain.Entities.Base;
+using Domain.Entities.Base;
 
-namespace Core.Domain.Entities;
+namespace Domain.Entities;
 
 
 

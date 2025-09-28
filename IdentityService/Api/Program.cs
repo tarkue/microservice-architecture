@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authentication.BearerToken;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,11 +1,11 @@
-namespace Core.Domain.Interfaces;
+namespace Domain.Interfaces;
 
 public interface IPaginatedResultMeta
 {
-    Int16 TotalPages { get; init; }
-    Int16 CurrentPage { get; init; }
-    Int16 PageSize { get; init; }
-    Boolean HasNextPage { get; init; }
+    short TotalPages { get; init; }
+    short CurrentPage { get; init; }
+    short PageSize { get; init; }
+    bool HasNextPage { get; init; }
 }
 
 public interface IPaginatedResult<T>
