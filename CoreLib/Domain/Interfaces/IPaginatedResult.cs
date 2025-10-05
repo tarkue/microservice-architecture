@@ -10,6 +10,6 @@ public interface IPaginatedResultMeta
 
 public interface IPaginatedResult<T>
 {
-    T[] Data { get; init; }
+    IEnumerable<T> Data { get; init; }
     IPaginatedResultMeta Meta { get; init; }
 }

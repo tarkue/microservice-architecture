@@ -4,5 +4,5 @@ namespace Domain.Entities;
 
 public interface IGroup: IBaseEntity<Guid>
 {
-    Guid[] UserIds { get; init; }
+    string Name { get; set; }
 }
