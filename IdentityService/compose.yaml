@@ -1,0 +1,33 @@
+﻿services:
+  identityservice-api:
+    image: api
+    build:
+      context: .
+      dockerfile: Api/Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+
+  identityservice-postgresql:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME:-appdb}
+      POSTGRES_USER: ${DATABASE_USERNAME:-appuser}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-apppass}
+    ports:
+      - "${POSTGRESQL_PORT:-5432}:5432"
+    volumes:
+      - identityservice-postgresql:/var/lib/postgresql/data
+
+  identityservice-redis:
+    image: redis/redis-stack-server
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    environment:
+      REDIS_ARGS: "--requirepass ${REDIS_PASSWORD} --user ${REDIS_USERNAME} on >${REDIS_PASSWORD} ~* allcommands --user default off nopass nocommands"
+
+
+volumes:
+  identityservice-postgresql:

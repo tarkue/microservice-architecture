@@ -17,6 +17,6 @@ public record PermissionDal: BaseDal, IPermission
     [Column("resourceId")]
     public Guid? ResourceId { get; init; }
 
-    public List<GroupDal> Groups { get; } = [];
-    public List<PermissionGroupDal> PermissionGroups { get; } = [];
+    public ICollection<GroupDal> Groups { get; } = [];
+    public ICollection<PermissionGroupDal> PermissionGroups { get; } = [];
 }

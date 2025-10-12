@@ -2,7 +2,7 @@ using Dal.Models;
 using Domain.Entities;
 using Domain.Enums;
 
-namespace IdentityService.Dtos;
+namespace IdentityService.Dtos.Responses;
 
 public record ResourceResponse: IResource
 {

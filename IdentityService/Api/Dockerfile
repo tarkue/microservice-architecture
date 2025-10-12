@@ -27,7 +27,7 @@ WORKDIR "/src"
 RUN dotnet tool install --global dotnet-ef --version 9.0.0
 ENV PATH="$PATH:/root/.dotnet/tools"
 # Создаем миграции
-RUN dotnet ef migrations add InitialCreate --project Dal --startup-project Api --output-dir Migrations
+RUN dotnet ef migrations add --project Dal/Dal.csproj --startup-project Api/Api.csproj --context Dal.AppDbContext --configuration Debug Initial --output-dir Migrations
 # Генерируем SQL скрипт для миграций (опционально)
 RUN dotnet ef migrations script --project Dal --startup-project Api --idempotent --output /app/migrations.sql
 

@@ -1,4 +1,4 @@
-namespace IdentityService.Dtos;
+namespace IdentityService.Dtos.Responses;
 
 public class TokenResponse
 {

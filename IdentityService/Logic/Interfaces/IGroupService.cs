@@ -1,5 +1,6 @@
 using Dal.Models;
 using Domain.Entities;
+using Domain.Interfaces;
 
 namespace Logic.Interfaces;
 

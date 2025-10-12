@@ -32,6 +32,6 @@ public record UserDal: BaseDal, ISecuredUser, IPhoto<ResourceDal>
     [ForeignKey(nameof(PhotoResourceId))]
     public ResourceDal? Photo { get; init; }
 
-    public List<GroupDal> Groups { get; } = [];
-    public List<GroupUserDal> GroupUsers { get; } = [];
+    public ICollection<GroupDal> Groups { get; } = [];
+    public ICollection<GroupUserDal> GroupUsers { get; } = [];
 }

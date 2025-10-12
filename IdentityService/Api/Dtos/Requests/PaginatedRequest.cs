@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace IdentityService.Dtos;
+namespace IdentityService.Dtos.Requests;
 
 public class PaginatedRequest
 {

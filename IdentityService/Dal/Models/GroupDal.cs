@@ -13,8 +13,8 @@ public record GroupDal :  BaseDal, IGroup
     [Column("name")]
     public required string Name { get; set; }
     
-    public List<UserDal> Users { get; } = [];
-    public List<PermissionDal> Permissions { get; } = [];
-    public List<GroupUserDal> GroupUsers { get; } = [];
-    public List<PermissionGroupDal> PermissionGroups { get; } = [];
+    public ICollection<UserDal> Users { get; } = [];
+    public ICollection<PermissionDal> Permissions { get; } = [];
+    public ICollection<GroupUserDal> GroupUsers { get; } = [];
+    public ICollection<PermissionGroupDal> PermissionGroups { get; } = [];
 }

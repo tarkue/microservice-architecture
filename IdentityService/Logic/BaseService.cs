@@ -22,7 +22,7 @@ public class BaseService<TEntity, TIdentifier>(DbSet<TEntity> entity, DbContext 
         return await entity.FindAsync(id);
     }
 
-    public async Task CreateAsync(TEntity newEntity)
+    public async Task CreateFromDalAsync(TEntity newEntity)
     {
         entity.Add(newEntity);
         await context.SaveChangesAsync();

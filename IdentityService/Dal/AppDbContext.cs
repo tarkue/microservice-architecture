@@ -10,36 +10,68 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<UserDal> Users { get; set; }
     public DbSet<PermissionDal> Permissions { get; set; }
     
+    public DbSet<GroupUserDal> GroupUsers { get; set; }
+    public DbSet<PermissionGroupDal> PermissionGroups { get; set; }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // Конфигурация для UserDal
+        modelBuilder.Entity<UserDal>(entity =>
+        {
+            entity.HasKey(u => u.Id);
+            entity.Property(u => u.Name).IsRequired().HasMaxLength(100);
+            entity.Property(u => u.Email).IsRequired().HasMaxLength(255);
+            entity.HasIndex(u => u.Name).IsUnique();
+            entity.HasIndex(u => u.Email).IsUnique();
+        });
+
+        // Конфигурация для GroupDal
+        modelBuilder.Entity<GroupDal>(entity =>
+        {
+            entity.HasKey(g => g.Id);
+            entity.Property(g => g.Name).IsRequired().HasMaxLength(100);
+            entity.HasIndex(g => g.Name).IsUnique();
+        });
+
+        // Конфигурация для PermissionDal
+        modelBuilder.Entity<PermissionDal>(entity =>
+        {
+            entity.HasKey(p => p.Id);
+            entity.Property(p => p.Type).IsRequired();
+            entity.Property(p => p.ChatId).HasMaxLength(36);
+            entity.Property(p => p.ResourceId).HasMaxLength(36);
+        });
+
         // Configure the join entity for Group and User
         modelBuilder.Entity<GroupUserDal>()
-            .HasKey(gu => new { gu.GroupId, gu.UserId }); // Composite primary key
+            .HasKey(gu => new { gu.GroupId, gu.UserId });
 
-        // Configure the relationship from GroupUserDal to GroupDal
         modelBuilder.Entity<GroupUserDal>()
             .HasOne(gu => gu.Group)
-            .WithMany(g => g.GroupUsers) // You'll need to add this collection to GroupDal
-            .HasForeignKey(gu => gu.GroupId);
+            .WithMany(g => g.GroupUsers)
+            .HasForeignKey(gu => gu.GroupId)
+            .OnDelete(DeleteBehavior.Cascade);
 
-        // Configure the relationship from GroupUserDal to UserDal
         modelBuilder.Entity<GroupUserDal>()
             .HasOne(gu => gu.User)
-            .WithMany(u => u.GroupUsers) // You'll need to add this collection to UserDal
-            .HasForeignKey(gu => gu.UserId);
+            .WithMany(u => u.GroupUsers)
+            .HasForeignKey(gu => gu.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
 
-        // Repeat a similar pattern for PermissionGroupDal
+        // Configure the join entity for Permission and Group
         modelBuilder.Entity<PermissionGroupDal>()
-            .HasKey(gu => new { gu.GroupId, gu.PermissionId });
+            .HasKey(pg => new { pg.GroupId, pg.PermissionId });
         
         modelBuilder.Entity<PermissionGroupDal>()
-            .HasOne(gu => gu.Group)
+            .HasOne(pg => pg.Group)
             .WithMany(g => g.PermissionGroups)
-            .HasForeignKey(gu => gu.GroupId);
+            .HasForeignKey(pg => pg.GroupId)
+            .OnDelete(DeleteBehavior.Cascade);
         
         modelBuilder.Entity<PermissionGroupDal>()
-            .HasOne(gu => gu.Permission)
+            .HasOne(pg => pg.Permission)
             .WithMany(p => p.PermissionGroups)
-            .HasForeignKey(gu => gu.PermissionId);
+            .HasForeignKey(pg => pg.PermissionId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

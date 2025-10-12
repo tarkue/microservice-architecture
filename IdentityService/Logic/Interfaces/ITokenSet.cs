@@ -1,7 +1,8 @@
-namespace Logic.Models;
+namespace Logic.Interfaces;
 
 public interface ITokenSet
 {
-    public string AccessToken;
-    public string RefreshToken;
+    public string  AccessToken { get; init; }
+    public string  RefreshToken { get; init; }
+    public int ExpiresIn { get; init; }
 }

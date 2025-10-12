@@ -5,7 +5,7 @@ using Domain.Enums;
 using Domain.Interfaces;
 using Microsoft.OpenApi.Validations.Rules;
 
-namespace IdentityService.Dtos;
+namespace IdentityService.Dtos.Responses;
 
 public class UserResponse: IUser
 {
