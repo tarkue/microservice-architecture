@@ -1,0 +1,10 @@
+using Domain.Entities;
+
+namespace IdentityService.Dtos;
+
+public class UpdateUserRequest: IUserUpdate
+{
+    public string? Name { get; init; }
+    public string? Email { get; init; }
+    public Guid? Photo  { get; init; }
+}

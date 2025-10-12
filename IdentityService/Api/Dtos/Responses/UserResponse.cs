@@ -3,6 +3,7 @@ using Domain;
 using Domain.Entities;
 using Domain.Enums;
 using Domain.Interfaces;
+using Microsoft.OpenApi.Validations.Rules;
 
 namespace IdentityService.Dtos;
 
@@ -11,7 +12,9 @@ public class UserResponse: IUser
     public Guid Id { get; init; }
     public required string Name { get; init; }
     public required string Email { get; init; }
+
     public required UserRole  Role { get; init; }
+    
     public ResourceResponse? Photo { get; init; }
 
     public static UserResponse FromDal(UserDal user)
