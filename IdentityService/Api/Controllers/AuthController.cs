@@ -3,7 +3,7 @@ using IdentityService.Dtos.Requests;
 using IdentityService.Dtos.Responses;
 using Logic.Exceptions;
 using Logic.Interfaces;
-
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IdentityService.Controllers;
@@ -15,9 +15,37 @@ public class AuthController(IHttpContextAccessor httpContextAccessor, IAuthServi
     [HttpPost("login")]
     public async Task<ITokenSet> Login([FromBody] LoginRequest request)
     {
+        var response = httpContextAccessor.HttpContext?.Response;
+
+        if (response == null)
+        {
+            throw new BadHttpRequestException("Invalid response", StatusCodes.Status400BadRequest);
+        }
+
         try
         {
-            return await authService.LoginAsync(request.Username, request.Password);
+            var tokenSet = await authService.LoginAsync(request.Username, request.Password);
+
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTimeOffset.UtcNow.AddMinutes(tokenSet.ExpiresIn)
+            };
+
+            response.Cookies.Append("access_token", tokenSet.AccessToken, cookieOptions);
+
+            var refreshCookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTimeOffset.UtcNow.AddDays(7)
+            };
+            response.Cookies.Append("refresh_token", tokenSet.RefreshToken, refreshCookieOptions);
+
+            return tokenSet;
         }
         catch (UnauthorizedAccessException)
         {
