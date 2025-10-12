@@ -4,6 +4,17 @@
     build:
       context: .
       dockerfile: Api/Dockerfile
+      target: "base"
+
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    entrypoint:
+      - "dotnet"
+      - "/app/bin/Release/net9.0/Api.dll"
+    volumes:
+      - ./Api:/app:rw
+      - .:/src:rw
     env_file:
       - .env
     ports:

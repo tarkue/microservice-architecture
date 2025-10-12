@@ -11,5 +11,5 @@
 После необходимо запустить docker-контейнеры командой или внутри Rider
 
 ```bash
-docker compose -f compose.yaml -p identityservice up -d
+docker compose up -d --build
 ```
