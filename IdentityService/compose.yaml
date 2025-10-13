@@ -1,7 +1,44 @@
 ﻿services:
-  identityservice:
-    image: identityservice
+  identityservice-api:
+    image: api
     build:
       context: .
-      dockerfile: IdentityService/Dockerfile
+      dockerfile: Api/Dockerfile
+      target: "base"
 
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    entrypoint:
+      - "dotnet"
+      - "/app/bin/Release/net9.0/Api.dll"
+    volumes:
+      - ./Api:/app:rw
+      - .:/src:rw
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+
+  identityservice-postgresql:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME:-appdb}
+      POSTGRES_USER: ${DATABASE_USERNAME:-appuser}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-apppass}
+    ports:
+      - "${POSTGRESQL_PORT:-5432}:5432"
+    volumes:
+      - identityservice-postgresql:/var/lib/postgresql/data
+
+  identityservice-redis:
+    image: redis/redis-stack-server
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    environment:
+      REDIS_ARGS: "--requirepass ${REDIS_PASSWORD} --user ${REDIS_USERNAME} on >${REDIS_PASSWORD} ~* allcommands --user default off nopass nocommands"
+
+
+volumes:
+  identityservice-postgresql:
