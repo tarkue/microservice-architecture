@@ -1,4 +1,4 @@
-namespace Logic.Interfaces;
+namespace Logic.Interfaces.Configuration;
 
 public interface IRedisConfig
 {
