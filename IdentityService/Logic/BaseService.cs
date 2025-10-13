@@ -1,7 +1,6 @@
-using Domain.Entities.Base;
-using Domain.Interfaces;
+using Core.Entities.Base;
+using Core.Interfaces;
 using Logic.Extensions;
-using Logic.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Logic;

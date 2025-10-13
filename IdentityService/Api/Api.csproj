@@ -20,6 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\CoreLib\Core.Api\Core.Api.csproj" />
         <ProjectReference Include="..\Logic\Logic.csproj"/>
     </ItemGroup>
 

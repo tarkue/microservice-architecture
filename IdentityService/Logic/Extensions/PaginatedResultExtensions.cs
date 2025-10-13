@@ -1,7 +1,6 @@
-using System.Linq.Expressions;
-using Domain;
-using Domain.Interfaces;
-using Microsoft.EntityFrameworkCore; // Добавлено для async методов
+using Core;
+using Core.Interfaces;
+using Microsoft.EntityFrameworkCore; 
 
 namespace Logic.Extensions;
 
@@ -18,7 +17,7 @@ public static class PaginatedResultExtensions
 
         var totalCount = await query.CountAsync(cancellationToken);
         var totalPages = (short)Math.Ceiling(totalCount / (double)pageSize);
-        
+
         var data = await query
             .Skip((pageIndex - 1) * pageSize)
             .Take(pageSize)
@@ -26,7 +25,7 @@ public static class PaginatedResultExtensions
 
         var meta = new PaginatedResultMeta
         {
-            TotalPages = (short)Math.Max((short)1, totalPages), // Исправлен cast
+            TotalPages = Math.Max((short)1, totalPages), // Исправлен cast
             CurrentPage = (short)pageIndex,
             PageSize = (short)pageSize,
             HasNextPage = pageIndex < totalPages

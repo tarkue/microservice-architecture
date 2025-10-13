@@ -1,7 +1,7 @@
-using Domain.Entities.Base;
-using Domain.Enums;
+using Core.Entities.Base;
+using Core.Enums;
 
-namespace Domain.Entities;
+namespace Core.Entities;
 
 public interface IUser : IBaseEntity<Guid>
 {

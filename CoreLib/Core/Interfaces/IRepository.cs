@@ -1,6 +1,6 @@
-using Domain.Entities.Base;
+using Core.Entities.Base;
 
-namespace Domain.Interfaces;
+namespace Core.Interfaces;
 
 public interface IRepository<TEntity, in TIdentifier>
     where TEntity: IBaseEntity<TIdentifier>

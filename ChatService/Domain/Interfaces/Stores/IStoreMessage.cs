@@ -1,6 +1,6 @@
-namespace Domain.Interfaces;
+using Core.Interfaces;
+using Domain.Entities;
 
-public interface IStoreMessage
-{
-    
-}
+namespace Domain.Interfaces.Stores;
+
+public interface IStoreMessage: IRepository<Message, Guid> { }

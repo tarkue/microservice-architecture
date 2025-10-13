@@ -1,12 +1,12 @@
-using Domain.Entities.Base;
+using Core.Entities.Base;
 
-namespace Domain.Entities;
+namespace Core.Entities;
 
-
-
-public interface IMessage: IBaseEntity<Guid>
+public interface IMessageCreate
 {
     string Content { get; init; }
-    IResource[] Attachment {  get; init; }
-    DateTime Created { get; init; }
+    IResource[]? Attachment {  get; init; }
+    DateTime CreatedAt { get; init; }
 }
+
+public interface IMessage: IMessageCreate, IBaseEntity<Guid> { }

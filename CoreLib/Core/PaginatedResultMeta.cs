@@ -1,6 +1,6 @@
-using Domain.Interfaces;
+using Core.Interfaces;
 
-namespace Domain;
+namespace Core;
 
 // Реализация метаданных
 public record PaginatedResultMeta : IPaginatedResultMeta

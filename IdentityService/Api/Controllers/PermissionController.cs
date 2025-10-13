@@ -1,12 +1,8 @@
-using System.Security.Claims;
-using Dal.Models;
 using IdentityService.Dtos.Requests;
 using IdentityService.Dtos.Responses;
-using Logic;
 using Logic.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using StackExchange.Redis;
 
 namespace IdentityService.Controllers;
 

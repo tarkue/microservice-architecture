@@ -1,10 +1,10 @@
 using Dal.Models;
-using Domain.Entities;
-using Domain.Enums;
+using Core.Entities;
+using Core.Enums;
 
 namespace IdentityService.Dtos.Responses;
 
-public record ResourceResponse: IResource
+public record ResourceResponse : IResource
 {
     public Guid Id { get; init; }
     public required string Source { get; init; }

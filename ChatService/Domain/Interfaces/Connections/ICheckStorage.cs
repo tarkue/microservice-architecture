@@ -1,6 +1,8 @@
+using Core.Entities;
+
 namespace Domain.Interfaces.Connections;
 
-public class ICheckStorage
+public interface ICheckStorage
 {
-    
+    public Task ThrowExceptionIfNotExistAsync(IResource resource);
 }

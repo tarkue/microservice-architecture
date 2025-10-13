@@ -1,4 +1,4 @@
-using Domain.Entities;
+using Core.Entities;
 using Logic.Models;
 
 namespace Logic.Interfaces;

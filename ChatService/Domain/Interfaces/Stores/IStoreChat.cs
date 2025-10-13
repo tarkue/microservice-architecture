@@ -1,6 +1,6 @@
-namespace Domain.Interfaces;
+using Core.Interfaces;
+using Domain.Entities;
 
-public interface IStoreChat
-{
-    
-}
+namespace Domain.Interfaces.Stores;
+
+public interface IStoreChat: IRepository<Chat, Guid> { }

@@ -1,5 +1,5 @@
-using Domain.Entities;
-using Domain.Interfaces;
+using Core.Entities;
+using Core.Interfaces;
 
 namespace Dal.Entities;
 

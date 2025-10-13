@@ -1,6 +1,6 @@
-using Domain.Entities.Base;
+using Core.Entities.Base;
 
-namespace Domain.Entities;
+namespace Core.Entities;
 
 public interface IGroup: IBaseEntity<Guid>
 {

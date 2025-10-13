@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Domain.Entities;
-using Domain.Enums;
+using Core.Entities;
+using Core.Enums;
 
 namespace Dal.Models;
 
