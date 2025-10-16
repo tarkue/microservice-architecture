@@ -12,12 +12,17 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dal", "Dal\Dal.csproj", "{A8EFB0A9-2713-421E-8E21-04DA1793A584}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{1D46535E-5E20-45AD-B615-8E2030A10C90}"
+	ProjectSection(SolutionItems) = preProject
+		..\CoreLib\IdentityConnectionLib\IdentityConnectionLib.csproj = ..\CoreLib\IdentityConnectionLib\IdentityConnectionLib.csproj
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "..\CoreLib\Core\Core.csproj", "{5AD0CEBD-DBCF-473D-9359-635CF3FFA5A4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Api", "..\CoreLib\Core.Api\Core.Api.csproj", "{F3457CD9-E4AD-4E6D-A9B4-67FA1B9346F1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Configuration", "..\CoreLib\Core.Configuration\Core.Configuration.csproj", "{178D2095-BE20-4A87-9902-C5DAAA3AA409}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityConnectionLib", "..\CoreLib\IdentityConnectionLib\IdentityConnectionLib.csproj", "{FC1B83AC-B862-4897-AE71-10F8EEAE2885}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,10 +54,15 @@ Global
 		{178D2095-BE20-4A87-9902-C5DAAA3AA409}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{178D2095-BE20-4A87-9902-C5DAAA3AA409}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{178D2095-BE20-4A87-9902-C5DAAA3AA409}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC1B83AC-B862-4897-AE71-10F8EEAE2885}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC1B83AC-B862-4897-AE71-10F8EEAE2885}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC1B83AC-B862-4897-AE71-10F8EEAE2885}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC1B83AC-B862-4897-AE71-10F8EEAE2885}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5AD0CEBD-DBCF-473D-9359-635CF3FFA5A4} = {1D46535E-5E20-45AD-B615-8E2030A10C90}
 		{F3457CD9-E4AD-4E6D-A9B4-67FA1B9346F1} = {1D46535E-5E20-45AD-B615-8E2030A10C90}
 		{178D2095-BE20-4A87-9902-C5DAAA3AA409} = {1D46535E-5E20-45AD-B615-8E2030A10C90}
+		{FC1B83AC-B862-4897-AE71-10F8EEAE2885} = {1D46535E-5E20-45AD-B615-8E2030A10C90}
 	EndGlobalSection
 EndGlobal

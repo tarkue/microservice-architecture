@@ -1,5 +1,3 @@
-using System.Security.Claims;
-using Core.Api;
 using Core.Api.Interfaces;
 using Core.Interfaces;
 using Dal.Models;
@@ -13,11 +11,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace IdentityService.Controllers;
 
 [ApiController]
-[Route("user")]
 public class UserController(IUserService userService, IHttpContextAccessor httpContextAccessor, ICurrentUser currentUser)
 {
     [Authorize(Roles = "Admin")]
-    [HttpGet]
+    [HttpGet("admin/user")]
     public async Task<IPaginatedResult<UserResponse>> GetAll(PaginatedWithSearchRequest paginatedWithSearchRequest)
     {
         var paginatedResult = await userService.GetAllAsync(
@@ -29,15 +26,31 @@ public class UserController(IUserService userService, IHttpContextAccessor httpC
     }
     
     [Authorize(Roles = "User")]
-    [HttpGet("me")]
+    [HttpGet("user")]
     public async Task<UserResponse> GetCurrentUser()
     {
         var userDal = await GetCurrentUserOrThrow();
         return UserResponse.FromDal(userDal);
     }
+    
+    [Authorize(Roles = "User")]
+    [HttpGet("user/{id:guid}")]
+    public async Task<UserInfoResponse> GetUserInfoById(Guid id)
+    {
+        var currentUserId = currentUser.GetUserGuidOrThrow(httpContextAccessor.HttpContext?.User.Claims);
+        try
+        {
+            var userDal = await userService.FindByIdForUser(currentUserId, id);
+            return UserInfoResponse.FromDal(userDal);
+        }
+        catch (Exception ex)
+        {
+            throw new BadHttpRequestException(ex.Message, StatusCodes.Status403Forbidden);
+        }
+    }
 
     [Authorize(Roles = "Admin")]
-    [HttpGet("/{id:guid}")]
+    [HttpGet("/admin/user/{id:guid}")]
     public async Task<UserResponse> GetById(Guid id)
     {
         try
@@ -52,7 +65,7 @@ public class UserController(IUserService userService, IHttpContextAccessor httpC
     }
 
     [Authorize(Roles = "User")]
-    [HttpPatch]
+    [HttpPatch("user")]
     public async Task UpdateUser([FromBody] UpdateUserRequest updateUserRequest)
     {
         var userDal = await GetCurrentUserOrThrow();

@@ -11,4 +11,6 @@ public interface IUserService : IService<UserDal, Guid>
     public Task UpdateAsync(UserDal user, IUserUpdate updateBody);
 
     public Task<UserDal?> FindByEmailAsync(string email);
+
+    public Task<UserDal> FindByIdForUser(Guid currentUserId, Guid id);
 }
