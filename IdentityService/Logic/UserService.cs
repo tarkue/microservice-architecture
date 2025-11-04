@@ -1,4 +1,3 @@
-using System.Net;
 using Dal;
 using Dal.Models;
 using Core.Entities;
@@ -44,7 +43,19 @@ public class UserService(AppDbContext context): BaseService<UserDal, Guid>(conte
     {
         return await context.Users.FirstAsync(u => u.Email == email);
     }
-    
+
+    public async Task<UserDal> FindByIdForUser(Guid currentUserId, Guid id)
+    {
+        var hasPermission = context.Groups.Any(
+            g => g.Users.Any(
+                u => u.Id == currentUserId) && g.Users.Any(u => u.Id == id));
+
+        if (!hasPermission)
+            throw new ArgumentException("Access denied");
+        
+        return await context.Users.FirstAsync(u => u.Id == id);
+    }
+
     public async Task UpdateAsync(UserDal userDal, IUserUpdate updateBody)
     {
         await UpdateAsync(new UserDal()

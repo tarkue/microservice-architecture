@@ -1,5 +1,6 @@
 using System.Text;
 using Core.Api;
+using Core.Api.HttpService;
 using Core.Api.Interfaces;
 using Core.Configuration;
 using Core.Configuration.Interfaces;
@@ -15,6 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+builder.Services.AddHttpRequestService();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<IConfigurationWithAuth, EnvConfigurationWithAuth>();
 builder.Services.AddTransient<ICurrentUser, CurrentUser>();
