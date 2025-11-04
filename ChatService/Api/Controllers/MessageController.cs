@@ -21,8 +21,10 @@ public class MessageController(ICurrentUser currentUser, IHttpContextAccessor ht
 
     [HttpPost]
     [Authorize(Roles = "User")]
-    public void Send(Guid id, [FromBody] IMessageCreate messageCreate)
-    { }
+    public void Send(Guid id, [FromBody] MessageCreateRequest messageCreate)
+    {
+        
+    }
     
     private Guid GetUserIdOrThrow() => currentUser.GetUserGuidOrThrow(httpContextAccessor.HttpContext?.User.Claims);
 }

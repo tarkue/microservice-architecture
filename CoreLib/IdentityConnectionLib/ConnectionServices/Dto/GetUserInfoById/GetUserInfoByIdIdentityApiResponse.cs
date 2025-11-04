@@ -1,6 +1,6 @@
 using Core.Entities;
 
-namespace ProfileConnectionLib.ConnectionServices.Dto.GetUserInfoById;
+namespace IdentityConnectionLib.ConnectionServices.Dto.GetUserInfoById;
 
 public class GetUserInfoByIdIdentityApiResponse: IUserInfo
 {

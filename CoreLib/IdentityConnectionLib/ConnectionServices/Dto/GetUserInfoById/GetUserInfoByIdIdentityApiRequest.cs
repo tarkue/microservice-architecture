@@ -1,6 +1,6 @@
-using ProfileConnectionLib.ConnectionServices.Dto.Shared;
+using Core.Api.Dto;
 
-namespace ProfileConnectionLib.ConnectionServices.Dto.GetUserInfoById;
+namespace IdentityConnectionLib.ConnectionServices.Dto.GetUserInfoById;
 
 public class GetUserInfoByIdIdentityApiRequest : AuthorizationHeaders
 {

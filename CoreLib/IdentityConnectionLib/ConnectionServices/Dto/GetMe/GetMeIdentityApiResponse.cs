@@ -1,6 +1,6 @@
 using Core.Entities;
 
-namespace ProfileConnectionLib.ConnectionServices.Dto.GetMe;
+namespace IdentityConnectionLib.ConnectionServices.Dto.GetMe;
 
 public class GetMeIdentityApiResponse: IUser
 {

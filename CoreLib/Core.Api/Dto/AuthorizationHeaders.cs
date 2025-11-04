@@ -1,4 +1,4 @@
-namespace ProfileConnectionLib.ConnectionServices.Dto.Shared;
+namespace Core.Api.Dto;
 
 public class AuthorizationHeaders
 {

@@ -1,6 +1,6 @@
-using ProfileConnectionLib.ConnectionServices.Dto.Shared;
+using Core.Api.Dto;
 
-namespace ChatConnectionLib.ConenctionServices.Dto.UpdateChatsWithUser;
+namespace ChatConnectionLib.ConnectionServices.Dto.UpdateChatsWithUser;
 
 public class UpdateChatsWithUserRequest: AuthorizationHeaders
 {

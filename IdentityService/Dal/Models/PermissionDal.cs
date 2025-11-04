@@ -1,7 +1,6 @@
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Core.Entities;
 using Core.Enums;
+using IPermission = Core.Entities.IPermission;
 
 namespace Dal.Models;
 

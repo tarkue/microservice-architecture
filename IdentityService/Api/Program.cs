@@ -5,8 +5,10 @@ using Core.Api.Interfaces;
 using Core.Configuration;
 using Dal;
 using Logic;
+using Logic.Consumers;
 using Logic.Interfaces;
 using Logic.Interfaces.Configuration;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +30,62 @@ builder.Services.AddControllers()
 builder.Services.AddOpenApi();
 builder.Services.AddHealthChecks();
 builder.Services.AddHttpContextAccessor();
+
+
+builder.Services.AddMassTransit(x =>
+{
+    x.AddSagaStateMachine<UserUpdateSaga, UserUpdateSagaState>()
+        .EntityFrameworkRepository(r =>
+        {
+            r.ConcurrencyMode = ConcurrencyMode.Pessimistic;
+            r.AddDbContext<DbContext, ProjectDbContext>((provider, builder) =>
+            {
+                builder.UseNpgsql(connectionString);
+            });
+        });
+    
+    x.AddConsumer<UserUpdateCoordinator>();
+    x.AddConsumer<ChatWithUserUpdater>();
+    x.AddConsumer<ChatRealTimeSetup>();
+    x.AddConsumer<UserUpdateFinalizer>();
+
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host("localhost", "/", h =>
+        {
+            h.Username("guest");
+            h.Password("guest");
+        });
+        
+        cfg.ReceiveEndpoint("user-update-saga", e =>
+        {
+            e.ConfigureSaga<UserUpdateSagaState>(context);
+        });
+        
+        cfg.ReceiveEndpoint("user-update-coordinator", e =>
+        {
+            e.ConfigureConsumer<UserUpdateCoordinator>(context);
+        });
+
+        cfg.ReceiveEndpoint("chat-with-user-updater", e =>
+        {
+            e.ConfigureConsumer<ChatWithUserUpdater>(context);
+        });
+
+        cfg.ReceiveEndpoint("chat-notifications-setup", e =>
+        {
+            e.ConfigureConsumer<ChatRealTimeSetup>(context);
+        });
+
+        cfg.ReceiveEndpoint("user-update-finalizer", e =>
+        {
+            e.ConfigureConsumer<UserUpdateFinalizer>(context);
+        });
+
+        cfg.ConfigureEndpoints(context);
+    });
+});
+
 builder.Services.AddSingleton<IEnvConfiguration, EnvConfiguration>();
 builder.Services.AddTransient<ICurrentUser, CurrentUser>();
 builder.Services.AddTransient<IAuthService, AuthService>();

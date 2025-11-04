@@ -1,7 +1,7 @@
-namespace ProfileConnectionLib.ConnectionServices.Configuration;
+namespace Core.Api.Configuration;
 
-public interface IIdentityConnectionConfiguration
+public interface IConnectionConfiguration
 {
-    string IdentityApiProtocol { get; init; }
-    string IdentityApiHost { get; init;  }
+    string ApiProtocol { get; init; }
+    string ApiHost { get; init;  }
 }

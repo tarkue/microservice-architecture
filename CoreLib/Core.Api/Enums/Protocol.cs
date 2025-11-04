@@ -1,4 +1,4 @@
-namespace ProfileConnectionLib.ConnectionServices.Enums;
+namespace Core.Api.Enums;
 
 public enum Protocol
 {

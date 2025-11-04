@@ -22,6 +22,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\CoreLib\Core.Api\Core.Api.csproj" />
       <ProjectReference Include="..\..\CoreLib\Core.Configuration\Core.Configuration.csproj" />
+      <ProjectReference Include="..\..\CoreLib\IdentityConnectionLib\IdentityConnectionLib.csproj" />
       <ProjectReference Include="..\Services\Services.csproj" />
     </ItemGroup>
 
