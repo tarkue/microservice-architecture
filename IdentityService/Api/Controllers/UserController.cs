@@ -1,6 +1,8 @@
 using System.Security.Claims;
+using Core.Api;
+using Core.Api.Interfaces;
+using Core.Interfaces;
 using Dal.Models;
-using Domain.Interfaces;
 using IdentityService.Dtos.Requests;
 using IdentityService.Dtos.Responses;
 using Logic.Interfaces;
@@ -12,7 +14,7 @@ namespace IdentityService.Controllers;
 
 [ApiController]
 [Route("user")]
-public class UserController(IUserService userService, IHttpContextAccessor httpContextAccessor )
+public class UserController(IUserService userService, IHttpContextAccessor httpContextAccessor, ICurrentUser currentUser)
 {
     [Authorize(Roles = "Admin")]
     [HttpGet]
@@ -59,20 +61,9 @@ public class UserController(IUserService userService, IHttpContextAccessor httpC
 
     private async Task<UserDal> GetCurrentUserOrThrow()
     {
-        var id = GetGuidOrThrow();
+        var id = currentUser.GetUserGuidOrThrow(httpContextAccessor.HttpContext?.User.Claims);
         var userDal = await userService.FindByIdAsync(id);
 
         return userDal ?? throw new BadHttpRequestException("User not found", StatusCodes.Status404NotFound);
-    }
-    
-    private Guid GetGuidOrThrow()
-    {
-        
-        var idInString = httpContextAccessor.HttpContext?.User.Claims.First(c => c.Type.Equals(ClaimTypes.Sid)).Value;
-        
-        if (!Guid.TryParse(idInString, out var id))
-            throw new BadHttpRequestException("User not found", StatusCodes.Status404NotFound);
-        
-        return id;
     }
 }

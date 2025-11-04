@@ -1,7 +1,7 @@
 using Dal;
 using Dal.Models;
-using Domain.Entities;
-using Domain.Enums;
+using Core.Entities;
+using Core.Enums;
 using Logic.Exceptions;
 using Logic.Interfaces;
 using Microsoft.EntityFrameworkCore;

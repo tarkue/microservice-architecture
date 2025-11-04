@@ -1,5 +1,5 @@
-using Domain.Entities;
-using Domain.Enums;
+using Core.Entities;
+using Core.Enums;
 
 namespace IdentityService.Dtos.Requests;
 

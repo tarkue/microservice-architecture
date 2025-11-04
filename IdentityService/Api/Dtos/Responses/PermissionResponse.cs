@@ -1,16 +1,16 @@
 using Dal.Models;
-using Domain.Entities;
-using Domain.Enums;
+using Core.Entities;
+using Core.Enums;
 
 namespace IdentityService.Dtos.Responses;
 
-public class PermissionResponse: IPermission
+public class PermissionResponse : IPermission
 {
     public required Guid Id { get; init; }
     public required PermissionType Type { get; init; }
     public Guid? ChatId { get; init; }
     public Guid? ResourceId { get; init; }
-    
+
     public static PermissionResponse FromDal(PermissionDal permissionDal)
     {
         return new PermissionResponse()

@@ -1,8 +1,8 @@
 using System.Net;
 using Dal;
 using Dal.Models;
-using Domain.Entities;
-using Domain.Interfaces;
+using Core.Entities;
+using Core.Interfaces;
 using Logic.Extensions;
 using Logic.Interfaces;
 using Microsoft.EntityFrameworkCore;

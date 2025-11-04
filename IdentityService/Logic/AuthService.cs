@@ -2,18 +2,19 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Dal.Models;
-using Domain.Entities;
-using Domain.Enums;
+using Core.Entities;
+using Core.Enums;
 using Logic.Exceptions;
 using Logic.Helpers;
 using Logic.Interfaces;
+using Logic.Interfaces.Configuration;
 using Logic.Models;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Logic;
 
-public class AuthService(IUserService userService, IDistributedCache cache, IConfiguration configuration): IAuthService
+public class AuthService(IUserService userService, IDistributedCache cache, IEnvConfiguration envConfiguration) : IAuthService
 {
     private readonly PasswordHasherHelper _passwordHasherHelper = new();
     private const string RefreshPrefix = "refresh:";
@@ -28,14 +29,14 @@ public class AuthService(IUserService userService, IDistributedCache cache, ICon
             Password = request.Password,
             Role = UserRole.User
         });
-        
+
         await userService.CreateFromDalAsync(user);
     }
 
     public async Task<ITokenSet> LoginAsync(string email, string password)
     {
         var user = await userService.FindByEmailAsync(email) ?? throw new UnauthorizedAccessException("Invalid credentials");
-        
+
         if (!_passwordHasherHelper.VerifyUserWithHashedPassword(user, password))
             throw new UnauthorizedAccessException("Invalid credentials");
 
@@ -63,11 +64,10 @@ public class AuthService(IUserService userService, IDistributedCache cache, ICon
             new(ClaimTypes.Role, role),
             new(ClaimTypes.Sid, userId.ToString())
         };
-
-        configuration.ValidateAll();
-        var issuer = configuration.Auth.Issuer;
-        var audience = configuration.Auth.Audience;
-        var key = configuration.Auth.Key;
+        
+        var issuer = envConfiguration.Auth.Issuer;
+        var audience = envConfiguration.Auth.Audience;
+        var key = envConfiguration.Auth.Key;
 
         var jwt = new JwtSecurityToken(
             issuer: issuer,

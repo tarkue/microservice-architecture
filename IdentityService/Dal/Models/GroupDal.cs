@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Domain.Entities;
+using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dal.Models;

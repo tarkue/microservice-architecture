@@ -1,6 +1,6 @@
 using Dal.Models;
-using Domain.Entities;
-using Domain.Interfaces;
+using Core.Entities;
+using Core.Interfaces;
 
 namespace Logic.Interfaces;
 

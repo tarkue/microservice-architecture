@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using Domain.Entities;
+using Core.Entities;
 
 namespace IdentityService.Dtos.Requests;
 

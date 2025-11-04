@@ -1,9 +1,9 @@
 using Dal.Models;
-using Domain;
-using Domain.Entities;
-using Domain.Enums;
-using Domain.Interfaces;
-using Microsoft.OpenApi.Validations.Rules;
+using Core;
+using Core.Entities;
+using Core.Enums;
+using Core.Interfaces;
+
 
 namespace IdentityService.Dtos.Responses;
 
