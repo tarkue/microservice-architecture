@@ -12,40 +12,50 @@ public class ConnectionService
     protected IHttpRequestService? Client;
     protected IConnectionConfiguration? Configuration;
     
-    protected Task<TResponse> Get<TRequest, TResponse>(Uri uri, TRequest request) where TRequest : AuthorizationHeaders
+    protected async Task<TResponse> Get<TRequest, TResponse>(Uri uri, TRequest request) where TRequest : AuthorizationHeaders
     {
-        var protocol = GetProtocolByConfiguration();
-        if (protocol != Protocol.Http)
-        {
-            throw new Exception("Unsupported protocol");
-        }
-        
-        return BuildRequest<TRequest, TResponse>(HttpMethod.Get, uri, request);
+        ThrowIfUnsupportedProtocol();
+        return await BuildRequest<TRequest, TResponse>(HttpMethod.Get, uri, request);
+    }
+
+    protected async Task Patch<TRequest>(Uri uri, TRequest request) 
+        where TRequest : AuthorizationHeaders
+    {
+        ThrowIfUnsupportedProtocol();
+        await BuildRequest<TRequest, object>(HttpMethod.Patch, uri, request);
     }
 
     private async Task<TResponse> BuildRequest<TRequest, TResponse>(HttpMethod method, Uri uri, TRequest request)
         where TRequest: AuthorizationHeaders
     {
-        var protocol = GetProtocolByConfiguration();
-
-        if (protocol != Protocol.Http)
-        {
-            throw new NotImplementedException("Unsupported protocol");
-        }
+        ThrowIfUnsupportedProtocol();
         
         var headers = new Dictionary<string, string>
         {
             { "Authorization", $"Bearer {request.AccessToken}" }
         };
+
+        request.AccessToken = null;
+        
         var response =  Client?.SendRequestAsync<TResponse>(new HttpRequestData()
         {
             ContentType = ContentType.ApplicationJson,
-            Method = HttpMethod.Get,
+            Method = method,
+            Body = request,
             Uri = uri,
             HeaderDictionary = headers,
         })!;
         await response.WaitAsync(CancellationToken.None);
         return response.Result.Body;
+    }
+
+    private void ThrowIfUnsupportedProtocol()
+    {
+        var protocol = GetProtocolByConfiguration();
+        if  (protocol != Protocol.Http)
+        {
+            throw new Exception("Unsupported protocol");
+        }
     }
 
     protected Protocol GetProtocolByConfiguration()

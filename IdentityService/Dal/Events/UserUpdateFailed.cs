@@ -2,8 +2,7 @@ namespace Dal.Events;
 
 public class UserUpdateFailed
 {
-    public Guid UserId { get; init; }
-    public string Reason { get; init; } = string.Empty;
-    public DateTime Timestamp { get; init; }
-
+    public required Guid UserId { get; init; }
+    public required string Reason { get; init; } = string.Empty;
+    public required DateTime Timestamp { get; init; }
 }

@@ -6,8 +6,13 @@ namespace ChatConnectionLib;
 
 public class ChatConnectionService: ConnectionService, IChatConnectionService
 {
-    public Task UpdateChatsWithUser(UpdateChatsWithUserRequest request)
+    public async Task UpdateChatsWithUser(UpdateChatsWithUserRequest request)
     {
-        throw new NotImplementedException();
+        var builder = new UriBuilder(Configuration!.ApiHost)
+        {
+            Path = $"user-with-chat-update"
+        };
+        
+        await Patch(builder.Uri, request);
     }
 }

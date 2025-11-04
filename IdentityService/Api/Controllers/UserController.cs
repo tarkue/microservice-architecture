@@ -1,9 +1,11 @@
 using Core.Api.Interfaces;
 using Core.Interfaces;
+using Dal.Events;
 using Dal.Models;
 using IdentityService.Dtos.Requests;
 using IdentityService.Dtos.Responses;
 using Logic.Interfaces;
+using MassTransit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,7 +13,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace IdentityService.Controllers;
 
 [ApiController]
-public class UserController(IUserService userService, IHttpContextAccessor httpContextAccessor, ICurrentUser currentUser)
+public class UserController(
+    IUserService userService, IPublishEndpoint publishEndpoint, 
+    IHttpContextAccessor httpContextAccessor, ICurrentUser currentUser)
 {
     [Authorize(Roles = "Admin")]
     [HttpGet("admin/user")]
@@ -69,7 +73,22 @@ public class UserController(IUserService userService, IHttpContextAccessor httpC
     public async Task UpdateUser([FromBody] UpdateUserRequest updateUserRequest)
     {
         var userDal = await GetCurrentUserOrThrow();
-        await userService.UpdateAsync(userDal, updateUserRequest);
+        httpContextAccessor.HttpContext?.Request.Headers.TryGetValue(
+            "Authorization", out var authorization);
+        var accessToken = authorization.First()!.Split(' ')[1];
+        
+        var startedEvent = new UserUpdateStarted
+        {
+            UserId = userDal.Id,
+            AccessToken = accessToken,
+            Name = updateUserRequest.Name,
+            Email = updateUserRequest.Email,
+            Photo = updateUserRequest.Photo,
+        };
+        
+        await publishEndpoint.Publish(startedEvent);
+
+        
     }
 
     private async Task<UserDal> GetCurrentUserOrThrow()

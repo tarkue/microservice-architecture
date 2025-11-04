@@ -4,6 +4,7 @@ using Core.Api;
 using Core.Api.Interfaces;
 using Core.Configuration;
 using Dal;
+using Dal.Sagas;
 using Logic;
 using Logic.Consumers;
 using Logic.Interfaces;
@@ -38,15 +39,15 @@ builder.Services.AddMassTransit(x =>
         .EntityFrameworkRepository(r =>
         {
             r.ConcurrencyMode = ConcurrencyMode.Pessimistic;
-            r.AddDbContext<DbContext, ProjectDbContext>((provider, builder) =>
+            r.AddDbContext<DbContext, AppDbContext>((provider, options) =>
             {
-                builder.UseNpgsql(connectionString);
+                var config = provider.GetRequiredService<IEnvConfiguration>();
+                options.UseNpgsql(config.Database.ConnectionString);
             });
         });
     
     x.AddConsumer<UserUpdateCoordinator>();
     x.AddConsumer<ChatWithUserUpdater>();
-    x.AddConsumer<ChatRealTimeSetup>();
     x.AddConsumer<UserUpdateFinalizer>();
 
     x.UsingRabbitMq((context, cfg) =>
@@ -71,11 +72,7 @@ builder.Services.AddMassTransit(x =>
         {
             e.ConfigureConsumer<ChatWithUserUpdater>(context);
         });
-
-        cfg.ReceiveEndpoint("chat-notifications-setup", e =>
-        {
-            e.ConfigureConsumer<ChatRealTimeSetup>(context);
-        });
+        
 
         cfg.ReceiveEndpoint("user-update-finalizer", e =>
         {

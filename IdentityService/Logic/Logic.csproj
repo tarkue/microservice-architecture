@@ -8,6 +8,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\CoreLib\Core.Configuration\Core.Configuration.csproj" />
+        <ProjectReference Include="..\ChatConnectionLib\ChatConnectionLib.csproj" />
         <ProjectReference Include="..\Dal\Dal.csproj"/>
     </ItemGroup>
 

@@ -1,10 +1,10 @@
+using ChatConnectionLib.ConnectionServices.Dto.UpdateChatsWithUser;
 using Core.Entities;
 
 namespace Dal.Events;
 
-public class ChatWithUserUpdateRequested
+public class ChatWithUserUpdateRequested : UpdateChatsWithUserRequest
 {
-    public Guid UserId { get; init; }
-    public string? Name { get; init; }
-    public Guid? Photo { get; init; }
+    public required UserUpdateData OldData { get; init; }
+    public required DateTime Timestamp { get; init; }
 }
