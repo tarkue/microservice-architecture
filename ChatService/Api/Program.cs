@@ -4,11 +4,11 @@ using Core.Api.HttpService;
 using Core.Api.Interfaces;
 using Core.Configuration;
 using Core.Configuration.Interfaces;
+using IdentityConnectionLib;
+using IdentityConnectionLib.ConnectionServices.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using ProfileConnectionLib;
-using ProfileConnectionLib.ConnectionServices.Interfaces;
 using Scalar.AspNetCore;
 
 // Load Config
