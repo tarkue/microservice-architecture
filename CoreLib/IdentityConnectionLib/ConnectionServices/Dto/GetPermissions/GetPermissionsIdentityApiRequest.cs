@@ -1,5 +1,5 @@
-using ProfileConnectionLib.ConnectionServices.Dto.Shared;
+using Core.Api.Dto;
 
-namespace ProfileConnectionLib.ConnectionServices.Dto.GetPermissions;
+namespace IdentityConnectionLib.ConnectionServices.Dto.GetPermissions;
 
 public class GetPermissionsIdentityApiRequest: AuthorizationHeaders {}

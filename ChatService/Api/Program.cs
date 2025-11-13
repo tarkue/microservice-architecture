@@ -4,6 +4,8 @@ using Core.Api.HttpService;
 using Core.Api.Interfaces;
 using Core.Configuration;
 using Core.Configuration.Interfaces;
+using IdentityConnectionLib;
+using IdentityConnectionLib.ConnectionServices.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -19,6 +21,7 @@ builder.Services.AddControllers();
 builder.Services.AddHttpRequestService();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<IConfigurationWithAuth, EnvConfigurationWithAuth>();
+builder.Services.AddTransient<IIdentityConnectionService, IdentityConnectionService>();
 builder.Services.AddTransient<ICurrentUser, CurrentUser>();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

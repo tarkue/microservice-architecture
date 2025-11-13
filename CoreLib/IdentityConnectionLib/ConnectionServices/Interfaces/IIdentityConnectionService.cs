@@ -1,13 +1,13 @@
-using Core.Entities;
-using ProfileConnectionLib.ConnectionServices.Dto.GetMe;
-using ProfileConnectionLib.ConnectionServices.Dto.GetPermissions;
-using ProfileConnectionLib.ConnectionServices.Dto.GetUserInfoById;
 
-namespace ProfileConnectionLib.ConnectionServices.Interfaces;
+using IdentityConnectionLib.ConnectionServices.Dto.GetMe;
+using IdentityConnectionLib.ConnectionServices.Dto.GetPermissions;
+using IdentityConnectionLib.ConnectionServices.Dto.GetUserInfoById;
+
+namespace IdentityConnectionLib.ConnectionServices.Interfaces;
 
 public interface IIdentityConnectionService
 {
-    GetMeIdentityApiResponse GetMe(GetMeIdentityApiRequest request);
-    GetUserInfoByIdIdentityApiResponse GetUserInfoById(GetUserInfoByIdIdentityApiRequest request);
-    GetPermissionsIdentityApiResponse GetPermissions(GetPermissionsIdentityApiRequest request);
+    Task<GetMeIdentityApiResponse> GetMe(GetMeIdentityApiRequest request);
+    Task<GetUserInfoByIdIdentityApiResponse> GetUserInfoById(GetUserInfoByIdIdentityApiRequest request);
+    Task<GetPermissionsIdentityApiResponse> GetPermissions(GetPermissionsIdentityApiRequest request);
 }

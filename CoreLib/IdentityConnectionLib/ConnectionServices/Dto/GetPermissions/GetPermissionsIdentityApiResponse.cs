@@ -1,7 +1,7 @@
 using Core.Entities;
 using Core.Enums;
 
-namespace ProfileConnectionLib.ConnectionServices.Dto.GetPermissions;
+namespace IdentityConnectionLib.ConnectionServices.Dto.GetPermissions;
 
 public class GetPermissionsIdentityApiResponse: IPermission
 {

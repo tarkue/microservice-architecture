@@ -12,6 +12,11 @@ namespace Api.Controllers;
 [Route("/chat")]
 public class ChatController(ICurrentUser currentUser, IHttpContextAccessor httpContextAccessor) : ControllerBase
 {
+    /// <summary>
+    /// Метод получения всех чатов авторизованного пользователя
+    /// </summary>
+    /// <param name="options"></param>
+    /// <returns></returns>
     [HttpGet]
     [Authorize(Roles = "User")]
     public PaginatedResult<Chat> GetAll(GetAllOptionsQuery options)
@@ -19,6 +24,12 @@ public class ChatController(ICurrentUser currentUser, IHttpContextAccessor httpC
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// Обновление метаинформации чата
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="updateChat"></param>
+    /// <exception cref="NotImplementedException"></exception>
     [HttpPatch("{id:guid}")]
     [Authorize(Roles = "User")]
     public void Update(Guid id, [FromBody] IUpdateChat updateChat)

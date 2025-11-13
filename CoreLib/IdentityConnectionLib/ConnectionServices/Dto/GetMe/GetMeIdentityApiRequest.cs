@@ -1,5 +1,5 @@
-using ProfileConnectionLib.ConnectionServices.Dto.Shared;
+using Core.Api.Dto;
 
-namespace ProfileConnectionLib.ConnectionServices.Dto.GetMe;
+namespace IdentityConnectionLib.ConnectionServices.Dto.GetMe;
 
 public class GetMeIdentityApiRequest: AuthorizationHeaders { }

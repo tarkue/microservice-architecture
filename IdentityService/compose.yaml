@@ -30,7 +30,7 @@
     ports:
       - "${POSTGRESQL_PORT:-5432}:5432"
     volumes:
-      - identityservice-postgresql:/var/lib/postgresql/data
+      - identityservice-postgresql:/var/lib/postgresql
 
   identityservice-redis:
     image: redis/redis-stack-server
