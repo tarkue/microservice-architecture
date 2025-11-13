@@ -9,13 +9,18 @@ using Logic;
 using Logic.Consumers;
 using Logic.Interfaces;
 using Logic.Interfaces.Configuration;
+using Logic.Semaphore;
 using MassTransit;
+using Medallion.Threading;
+using Medallion.Threading.Redis;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
+using StackExchange.Redis;
 using EnvConfiguration = Logic.EnvConfiguration;
+using RedisDistributedSemaphore = Logic.Semaphore.RedisDistributedSemaphore;
 
 EnvConfigLoader.Load<EnvConfiguration>();
 
@@ -83,6 +88,7 @@ builder.Services.AddMassTransit(x =>
     });
 });
 
+builder.Services.AddMassTransitHostedService(); 
 builder.Services.AddSingleton<IEnvConfiguration, EnvConfiguration>();
 builder.Services.AddTransient<ICurrentUser, CurrentUser>();
 builder.Services.AddTransient<IAuthService, AuthService>();
@@ -116,6 +122,19 @@ builder.Services.AddStackExchangeRedisCache(options =>
     var config = sp.GetRequiredService<IEnvConfiguration>();
     options.Configuration = config.Redis.ConnectionString;
     options.InstanceName = config.Redis.InstanceName;
+});
+
+builder.Services.AddSingleton<IConnectionMultiplexer>(provider =>
+{
+    var config = provider.GetRequiredService<IEnvConfiguration>();
+    return ConnectionMultiplexer.Connect(config.Redis.ConnectionString);
+});
+
+builder.Services.AddTransient<IDistributedSemaphore>(provider =>
+{
+    var redis = provider.GetRequiredService<IConnectionMultiplexer>();
+    var database = redis.GetDatabase();
+    return new RedisDistributedSemaphore(database, "my_semaphore", 5);
 });
 
 builder.Services.AddTransient<IAuthService, AuthService>();
